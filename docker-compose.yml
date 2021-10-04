@@ -1,0 +1,17 @@
+version: "3.7"
+services:
+
+    web:
+      build: .
+      volumes: 
+        - /data:/storage
+        - /etc/localtime:/etc/localtime:ro
+      environment:
+        - TELEGRAM_BOT_TOKEN
+      restart: always
+
+networks:
+  default:
+    ipam:
+      config:
+        - subnet: 172.188.188.0/16
