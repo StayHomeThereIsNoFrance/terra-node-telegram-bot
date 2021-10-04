@@ -2,7 +2,7 @@ import os
 
 from constants.env_variables import DEBUG, LCD_ENDPOINT, NETWORK, NODE_IP
 
-VALIDATORS_ENDPOINT = 'http://localhost:8000/validators.json' if DEBUG else f'{LCD_ENDPOINT}staking/validators'
+VALIDATORS_ENDPOINT = 'http://localhost:8000/validators.json' if DEBUG else f'{LCD_ENDPOINT}cosmos/staking/v1beta1/validators/'
 NODE_STATUS_ENDPOINT = 'http://localhost:8000/status.json' if DEBUG else 'http://' + str(NODE_IP) + ':26657/status'
 NODE_INFO_ENDPOINT = 'http://localhost:8000/node_info.json' if DEBUG else f'{LCD_ENDPOINT}node_info'
 BLOCK42_TERRA_BOT_USERNAME = '@terranode_bot'

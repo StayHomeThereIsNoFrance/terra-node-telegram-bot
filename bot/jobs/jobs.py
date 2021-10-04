@@ -129,9 +129,9 @@ def check_node_status(context):
         # Check if there are any changes
         if len(changed_fields) > 0:
             text = f'Node: *{address}*\n' \
-                   f'Status: *{NODE_STATUSES[local_node["status"]]}*'
+                   f'Status: *{local_node["status"]}*'
             if 'status' in changed_fields:
-                text += f' ➡️ *{NODE_STATUSES[remote_node["status"]]}*'
+                text += f' ➡️ *{remote_node["status"]}*'
             text += f'\nJailed: *{local_node["jailed"]}*'
             if 'jailed' in changed_fields:
                 text += f' ➡️ *{remote_node["jailed"]}*'

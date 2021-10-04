@@ -225,7 +225,7 @@ def get_validator(address) -> (dict, None):
                 raise ConnectionError
 
         node = response.json()
-        return node['result']
+        return node['validator']
 
 
 def is_node_catching_up():
