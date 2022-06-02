@@ -18,7 +18,7 @@ def get_lcd_url(network_mode: str, debug: bool) -> str:
             return 'http://0.0.0.0:1317/'  # Localterra
         else:
             if network_mode == 'mainnet':
-                return 'https://lcd.terra.dev/'
+                return 'https://phoenix-lcd.terra.dev/'
             else:
                 return 'https://tequila-lcd.terra.dev/'
 
