@@ -2,7 +2,7 @@ import copy
 
 import requests
 
-from constants.constants import NODE_STATUS_ENDPOINT, NODE_STATUSES
+from constants.constants import NODE_STATUS_ENDPOINT, NODE_STATUSES, MIN_DELEGATOR_SHARES_DELTA
 from constants.env_variables import NODE_IP
 from constants.logger import logger
 from helpers import is_lcd_reachable, try_message_to_all_platforms, get_validator, is_price_feed_healthy, \
@@ -140,8 +140,12 @@ def check_node_status(context):
             if 'delegator_shares' in changed_fields:
                 remote_delegator_shares = int(float(remote_node['delegator_shares']))
                 delta = remote_delegator_shares - local_delegator_shares
-                delta = str(delta) if (delta < 0) else f"+{delta}"
-                text += f' ➡️ *{remote_delegator_shares}* (*Δ* {delta})'
+                
+                if delta < MIN_DELEGATOR_SHARES_DELTA:
+                    changed_fields.remove('delegator_shares')
+                else:
+                    delta = str(delta) if (delta < 0) else f"+{delta}"
+                    text += f' ➡️ *{remote_delegator_shares}* (*Δ* {delta})'
 
             # Update data
             local_node['status'] = remote_node['status']
@@ -149,7 +153,8 @@ def check_node_status(context):
             local_node['delegator_shares'] = remote_node['delegator_shares']
 
             # Send message
-            try_message_to_all_platforms(context=context, chat_id=chat_id, text=text)
+            if len(changed_fields) > 0:
+                try_message_to_all_platforms(context=context, chat_id=chat_id, text=text)
 
     for address in delete_addresses:
         del user_data['nodes'][address]
